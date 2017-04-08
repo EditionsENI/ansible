@@ -9,4 +9,4 @@ prod-apache-1
 prod-apache-2
 
 [mysql]
-prod-mysql-[1-2]
+prod-mysql-[1:2]
