@@ -1,8 +1,0 @@
-[all:vars]
-ansible_connection=local
-
-[apache]
-rec-apache-1 apache_url=rec.wiki.localdomain
-
-[mysql]
-rec-mysql-1 mysql_user_password=MyPassWord!

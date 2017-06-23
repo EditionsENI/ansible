@@ -1,0 +1,30 @@
+[all:vars]
+ansible_connection=local
+
+[apache]
+rec-apache-1 apache_url=rec.wiki.localdomain
+
+[mysql]
+rec-mysql-1 mysql_user_password=MyPassWord!
+
+[active-directory]
+active-directory-1
+
+[microservices]
+container-1 ansible_connection=docker
+
+[linux:children]
+apache
+mysql
+
+[windows:children]
+active-directory
+
+[container:children]
+microservices
+
+[windows:vars]
+ansible_connection=winrm
+
+[container:vars]
+ansible_connection=localhost
