@@ -1,0 +1,21 @@
+---
+
+- name: "Récupération informations et stockage en local"
+  hosts: all
+  gather_facts: no
+  connection: local
+  tasks:
+    - name: "Récupération informations"
+      setup:
+        gather_subset: "!all"
+      connection: "{{omit}}"
+    - name: "Création d'un répertoire pour chaque machine"
+      file:
+        path: "/tmp/{{inventory_hostname}}"
+        state: "directory"
+    - name: "Création d'un fichier avec les informations de chaque machine"
+      copy:
+        content: |
+          Distribution : {{ansible_distribution}}
+          Version      : {{ansible_distribution_major_version}}
+        dest: "/tmp/{{inventory_hostname}}/info.txt"
