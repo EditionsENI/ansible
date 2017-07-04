@@ -1,0 +1,10 @@
+---
+
+- name: "Génération fichier html des machines de notre inventaire"
+  hosts: all
+  connection: local
+  tasks:
+    - name: "Génération fichier html"
+      template:
+        src: "machine.html.j2"
+        dest: "{{lookup('env', 'PWD')}}/{{inventory_hostname}}.html"
