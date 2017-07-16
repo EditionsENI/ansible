@@ -1,0 +1,21 @@
+---
+
+- name: "Installation Apache"
+  hosts: inventaire
+  tasks:
+    - name: "Installation package apache"
+      yum:
+        name: "httpd"
+        state: "present"
+    - name: "Configuration Apache"
+      template:
+        src: "inventaire.conf.j2"
+        dest: "/etc/httpd/conf.d/inventaire.conf"
+        owner: "apache"
+        group: "apache"
+    - name: "Démarrage du service apache"
+      service:
+        name: "httpd"
+        state: "restarted"
+        enabled: yes
+  

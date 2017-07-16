@@ -2,9 +2,25 @@
 
 - name: "Génération fichier html des machines de notre inventaire"
   hosts: all
-  connection: local
+  gather_facts: yes
+  vars:
+    inventaire_central: "inventaire-central"
+    rep_template:       "/var/www/html/inventaire"
   tasks:
+    - name: "Création du répertoire des templates"
+      file:
+        path: "{{rep_template}}"
+        owner: "apache"
+        group: "apache"
+        mode: "0755"
+        state: "directory"
+      # Lancement de cette tâche sur la machine de centralisation
+      delegate_to: "{{inventaire_central}}"
+      # Comme nous n'avons qu'une seule machine centrale,
+      # pas besoin d'exécuter plusieurs fois cette tâche
+      run_once: yes
     - name: "Génération fichier html"
       template:
         src: "machine.html.j2"
-        dest: "{{lookup('env', 'PWD')}}/{{inventory_hostname}}.html"
+        dest: "{{rep_template}}/{{inventory_hostname}}.html"
+      delegate_to: "{{inventaire_central}}"

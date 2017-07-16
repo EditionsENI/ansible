@@ -1,0 +1,30 @@
+---
+
+- name: "Installation Apache"
+  hosts: inventaire
+  tasks:
+    - name: "Installation package apache"
+      yum:
+        name: "httpd"
+        state: "present"
+    - name: "Configuration Apache"
+      template:
+        src: "inventaire.conf.j2"
+        dest: "/etc/httpd/conf.d/inventaire.conf"
+        owner: "apache"
+        group: "apache"
+      # Stockage résultat de l'exécution de l'instruction template
+      register: conf_apache
+    # Instruction permettant de scruter le contenu de la variable
+    - debug: var=conf_apache
+    - name: "Redémarrage du service apache"
+      service:
+        name: "httpd"
+        state: "restarted"
+      # Relance en cas de changement
+      when: conf_apache.changed
+    - name: "Démarrage du service apache"
+      service:
+        name: "httpd"
+        state: "started"
+        enabled: yes
