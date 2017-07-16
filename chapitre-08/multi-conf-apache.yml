@@ -1,0 +1,9 @@
+---
+
+- name: "Installation Apache"
+  hosts: inventaire
+  roles:
+    - role: "apache"
+      nom_inventaire: "recette"
+    - role: "apache"
+      nom_inventaire: "production"
