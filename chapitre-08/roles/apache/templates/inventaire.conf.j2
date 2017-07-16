@@ -1,7 +1,7 @@
-Alias /inventaire /var/www/html/inventaire
+Alias /{{nom_inventaire}} {{emplacement_inventaire}}
 
 # Donne des droits d'accès à tout le monde
-<Directory /var/www/html/inventaire/>
+<Directory {{emplacement_inventaire}}/>
   Order Allow,Deny
   Allow from All
 </Directory>

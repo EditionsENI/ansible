@@ -1,0 +1,6 @@
+---
+
+# Emplacement de la conf Apache
+apache_root_conf: "/etc/httpd"
+# Destination des fichiers de configuration Apache
+apache_conf_d: "{{apache_root_conf}}/conf.d"
