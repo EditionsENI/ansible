@@ -18,7 +18,6 @@
         dest: "/etc/httpd/conf.d/inventaire.conf"
         owner: "apache"
         group: "apache"
-      changed_when: yes
       # En cas de changement, redémarrage d'apache
       notify: [ "Redémarrage du service apache" ]
     - name: "Démarrage du service apache"
