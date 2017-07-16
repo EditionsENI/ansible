@@ -1,0 +1,19 @@
+---
+
+- name: "Installation package apache"
+  yum:
+    name: "httpd"
+    state: "present"
+- name: "Configuration Apache"
+  template:
+    src: "inventaire.conf.j2"
+    dest: "/etc/httpd/conf.d/inventaire.conf"
+    owner: "apache"
+    group: "apache"
+  # En cas de changement, redémarrage d'apache
+  notify: [ "Redémarrage du service apache" ]
+- name: "Démarrage du service apache"
+  service:
+    name: "httpd"
+    state: "started"
+    enabled: yes
