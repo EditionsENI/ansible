@@ -1,0 +1,9 @@
+---
+
+- include: "install-apache.yml"
+  vars:
+    nom_inventaire: "recette"
+
+- include: "install-apache.yml"
+  vars:
+    nom_inventaire: "production"

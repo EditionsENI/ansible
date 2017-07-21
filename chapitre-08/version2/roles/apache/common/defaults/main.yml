@@ -1,0 +1,6 @@
+---
+
+# Nom de notre inventaire
+nom_inventaire: "inventaire"
+# Emplacement par défaut de notre inventaire
+emplacement_inventaire: "/var/www/html/{{nom_inventaire}}"

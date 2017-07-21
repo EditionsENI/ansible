@@ -1,0 +1,20 @@
+---
+
+- name: "Génération fichier html des machines de notre inventaire"
+  hosts: all
+  gather_facts: yes
+  vars:
+    # On utilise une variable pour accéder à cette machine
+    # pour des raisons de clarté
+    inventaire_central: "{{groups['inventaire'][0]}}"
+  roles:
+    # On récupère les variables de notre rôle
+    # Comme il n'y a pas d'instruction dans le role apache/common,
+    # pas besoin de l'instrution when: no
+    - role: "apache/common"
+  tasks:
+    - name: "Génération fichier html"
+      template:
+        src: "machine.html.j2"
+        dest: "{{emplacement_inventaire}}/{{inventory_hostname}}.html"
+      delegate_to: "{{inventaire_central}}"

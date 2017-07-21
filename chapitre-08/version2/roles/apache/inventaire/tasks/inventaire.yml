@@ -1,0 +1,6 @@
+---
+- name: "Génération fichier html"
+  template:
+    src: "machine.html.j2"
+    dest: "{{emplacement_inventaire}}/{{inventory_hostname}}.html"
+  delegate_to: "{{inventaire_central}}"
