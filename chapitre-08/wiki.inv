@@ -1,0 +1,8 @@
+[apache]
+apache1
+
+[apache:vars]
+php_install=yes
+
+[mysql]
+mysql1

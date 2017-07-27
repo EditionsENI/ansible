@@ -1,6 +1,6 @@
 ---
 
 - name: "Installation Apache"
-  hosts: inventaire
+  hosts: apache
   roles:
     - role: "apache"

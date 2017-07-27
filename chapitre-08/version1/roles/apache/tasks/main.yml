@@ -4,20 +4,13 @@
   yum:
     name: "httpd"
     state: "present"
-- name: "Création du répertoire d'inventaire"
-  file:
-    path: "{{emplacement_inventaire}}"
-    owner: "apache"
-    group: "apache"
-    state: directory
-- name: "Configuration Apache"
-  template:
-    src: "inventaire.conf.j2"
-    # apache_conf_d pointe vers la conf apache
-    dest: "{{apache_conf_d}}/{{nom_inventaire}}.conf"
-    owner: "apache"
-    group: "apache"
-  # En cas de changement, redémarrage d'apache
+- name: "Installation interpréteur PHP"
+  yum:
+    name: "php,php-mysql,php-xml"
+    state: "present"
+  # On force l'interprétation de la variable en booléen
+  when: php_install|bool
+  # Redémarrage pour prise en compte interpéteur
   notify: [ "Redémarrage du service apache" ]
 - name: "Démarrage du service apache"
   service:

@@ -1,0 +1,17 @@
+---
+
+- name: "Création du répertoire d'inventaire"
+  file:
+    path: "{{emplacement_inventaire}}"
+    owner: "apache"
+    group: "apache"
+    state: directory
+- name: "Configuration Apache"
+  template:
+    src: "inventaire.conf.j2"
+    # apache_conf_d pointe vers la conf apache
+    dest: "{{apache_conf_d}}/{{nom_inventaire}}.conf"
+    owner: "apache"
+    group: "apache"
+  # En cas de changement, redémarrage d'apache
+  notify: [ "Redémarrage du service apache" ]
