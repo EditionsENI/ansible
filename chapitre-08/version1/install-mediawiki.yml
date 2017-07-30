@@ -1,0 +1,7 @@
+---
+
+- name: "MediaWiki db configuration"
+  hosts: mysql
+  gather_facts: no
+  roles:
+    - role: "mediawiki/mariadb"
