@@ -1,18 +1,13 @@
 ---
 
-- name: "Installation package apache"
+- name: "apache installation"
   yum:
     name: "httpd"
     state: "present"
-- name: "Installation interpréteur PHP"
-  yum:
-    name: "php,php-mysql,php-xml"
-    state: "present"
-  # On force l'interprétation de la variable en booléen
+- include: "php-install.yml"
+  # force boolean evaluation
   when: php_install|bool
-  # Redémarrage pour prise en compte interpéteur
-  notify: [ "Redémarrage du service apache" ]
-- name: "Démarrage du service apache"
+- name: "apache service activation"
   service:
     name: "httpd"
     state: "started"

@@ -2,3 +2,6 @@
 
 # by default, no php thanks
 php_install: no
+
+# activate remi repo
+activate_remi_repo: no

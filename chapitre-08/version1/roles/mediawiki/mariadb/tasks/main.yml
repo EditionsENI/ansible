@@ -2,12 +2,12 @@
 
 - name: "mediawiki database"
   mysql_db:
-    name: "mediawiki"
+    name: "{{mediawiki_db_name}}"
     state: present
 
 - name: "mediawiki user+privileges"
   mysql_user:
     name:     "{{mediawiki_db_user}}"
     password: "{{mediawiki_db_password}}"
-    priv:     "mediawiki.*:ALL"
+    priv:     "{{mediawiki_db_name}}.*:ALL"
     state:    present

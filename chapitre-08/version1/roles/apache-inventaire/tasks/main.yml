@@ -1,12 +1,12 @@
 ---
 
-- name: "Création du répertoire d'inventaire"
+- name: "inventory directory"
   file:
     path: "{{emplacement_inventaire}}"
     owner: "apache"
     group: "apache"
     state: directory
-- name: "Configuration Apache"
+- name: "Apache configuration"
   template:
     src: "inventaire.conf.j2"
     # apache_conf_d pointe vers la conf apache

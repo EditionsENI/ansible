@@ -1,5 +1,0 @@
----
-
-# Default user for mediawiki
-mediawiki_db_user: "mediawiki"
-mediawiki_db_password: "mediawiki"
