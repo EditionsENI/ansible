@@ -1,0 +1,15 @@
+---
+
+# default mediawiki administrator
+mediawiki_admin_user:     "admin"
+mediawiki_admin_password: "@adm1n"
+
+mediawiki_name: "mediawiki"
+mediawiki_title: "ENI"
+mediawiki_directory: "/var/www/html/{{mediawiki_name}}"
+mediawiki_maintenance_directory: "{{mediawiki_directory}}/maintenance"
+
+# default database host: first machine from group mysql
+mediawiki_db_host: "{{groups.mysql.0}}"
+
+mediawiki_archive_url: "https://releases.wikimedia.org/mediawiki/1.29/mediawiki-1.29.0.tar.gz"

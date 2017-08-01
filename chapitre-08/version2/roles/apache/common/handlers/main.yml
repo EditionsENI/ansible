@@ -1,6 +1,0 @@
----
-
-- name: "Redémarrage du service apache"
-  service:
-    name: "httpd"
-    state: "restarted"
