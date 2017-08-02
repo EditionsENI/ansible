@@ -10,4 +10,6 @@
     name:     "{{mediawiki_db_user}}"
     password: "{{mediawiki_db_password}}"
     priv:     "{{mediawiki_db_name}}.*:ALL"
+    host:     "{{item}}"
     state:    present
+  with_items: "{{groups.apache}}"

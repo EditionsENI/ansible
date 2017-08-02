@@ -30,3 +30,5 @@
        --pass {{mediawiki_admin_password}}
        --dbserver {{mediawiki_db_host}}
        {{mediawiki_title}} {{mediawiki_admin_user}}
+  env:
+    LC_ALL: C

@@ -10,7 +10,7 @@
     state: present
 - name: "install php70 packages"
   yum:
-    name: "php,php-mysql,php-xml"
+    name: "php,php-mysql,php-xml,php-mbstring,php-mcrypt,php-gd,php-intl"
     state: latest
     enablerepo: "remi-php70"
   changed_when: yes
