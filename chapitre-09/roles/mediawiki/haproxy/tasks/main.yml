@@ -1,0 +1,21 @@
+---
+
+- name: "install haproxy package"
+  apt:
+    name: "haproxy"
+    state: present
+
+- name: "haproxy configuration"
+  template:
+    src: "mediawiki.conf.j2"
+    dest: "/etc/haproxy/conf.d/mediawiki.conf"
+    owner: "root"
+    group: "root"
+  notify: "restart haproxy"
+
+- name: "enable and start haproxy service"
+  service:
+    name: "haproxy"
+    state: started
+    enabled: yes
+

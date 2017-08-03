@@ -1,0 +1,8 @@
+---
+
+# Default schema
+mediawiki_db_name: "mediawiki"
+
+# Default user for mediawiki
+mediawiki_db_user:     "mediawiki"
+mediawiki_db_password: "mediawiki"

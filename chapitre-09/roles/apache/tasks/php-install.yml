@@ -1,0 +1,18 @@
+---
+
+- name: "epel activation"
+  yum:
+    name: "epel-release"
+    state: present
+- name: "remi repo activation"
+  yum:
+    name: "https://rpms.remirepo.net/enterprise/remi-release-7.rpm"
+    state: present
+- name: "install php70 packages"
+  yum:
+    name: "php,php-mysql,php-xml,php-mbstring,php-mcrypt,php-gd,php-intl"
+    state: latest
+    enablerepo: "remi-php70"
+  changed_when: yes
+  # We need to restart apache
+  notify: [ "apache restart" ]

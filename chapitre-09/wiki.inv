@@ -1,0 +1,12 @@
+[apache]
+apache1
+apache2
+
+[apache:vars]
+php_install=yes
+
+[mysql]
+mysql1
+
+[haproxy]
+haproxy1
