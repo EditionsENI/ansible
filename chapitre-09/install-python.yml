@@ -1,0 +1,11 @@
+---
+
+- name: "install python"
+  hosts: all
+  gather_facts: no
+  tasks:
+    - name: "Python installation using apt"
+      # Do not forget -y here to avoid apt's questions
+      raw: apt install -y python-minimal
+      args:
+        creates: "/usr/bin/python"
