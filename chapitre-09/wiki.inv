@@ -1,6 +1,5 @@
 [apache]
-apache1
-apache2
+apache[1:2]
 
 [apache:vars]
 php_install=yes
