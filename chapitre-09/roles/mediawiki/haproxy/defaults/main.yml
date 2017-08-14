@@ -1,0 +1,4 @@
+---
+
+# By default, we dont want to expose web statistics
+activate_webstats: no

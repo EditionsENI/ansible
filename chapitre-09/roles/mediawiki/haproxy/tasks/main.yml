@@ -7,15 +7,17 @@
 
 - name: "haproxy configuration"
   template:
-    src: "mediawiki.conf.j2"
-    dest: "/etc/haproxy/conf.d/mediawiki.conf"
+    src: "mediawiki.cfg.j2"
+    dest: "/etc/haproxy/haproxy.cfg"
     owner: "root"
     group: "root"
   notify: "restart haproxy"
+
+# Force restart handlers
+- meta: flush_handlers
 
 - name: "enable and start haproxy service"
   service:
     name: "haproxy"
     state: started
     enabled: yes
-
