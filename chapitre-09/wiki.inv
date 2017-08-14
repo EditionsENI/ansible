@@ -9,3 +9,6 @@ mysql1
 
 [haproxy]
 haproxy1
+
+[haproxy:vars]
+ansible_python_interpreter=/usr/bin/python3
