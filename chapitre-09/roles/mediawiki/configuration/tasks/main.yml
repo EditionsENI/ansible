@@ -40,3 +40,15 @@
   run_once: yes
   delegate_to: "{{item}}"
   with_items: "{{groups.apache}}"
+
+- name: "mediawiki db update"
+  become: yes
+  become_user: "apache"
+  command:
+    php update.php --quick
+  args:
+    chdir: "{{mediawiki_maintenance_directory}}"
+  # Update need to be launched only once
+  run_once: yes
+  register: _
+  changed_when: "' ...done.' in _.stdout"
