@@ -1,0 +1,28 @@
+---
+
+- name: "MediaWiki db configuration"
+  hosts: mysql
+  gather_facts: no
+  tags: [ "mariadb", "mysql" ]
+  tasks:
+    - name: "mediawiki database"
+      mysql_db:
+        name: "mediawiki"
+        state: absent
+
+    - name: "mediawiki user+privileges"
+      mysql_user:
+        name:     "mediawiki"
+        host:     "{{item}}"
+        state:    absent
+      with_items: "{{groups.apache}}"
+
+
+- name: "MediaWiki apache configuration"
+  hosts: apache
+  tags: "apache"
+  gather_facts: no
+  tasks:
+    - file:
+        path: "/var/www/html/mediawiki"
+        state: absent
