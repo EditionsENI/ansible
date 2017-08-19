@@ -9,6 +9,8 @@
 
 - name: "MediaWiki apache configuration"
   hosts: apache
+  # one, all hosts
+  serial: [ "1", "100%" ]
   tags: "apache"
   gather_facts: no
   roles:

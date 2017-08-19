@@ -14,8 +14,11 @@
     owner: "apache"
     group: "apache"
     remote_src: yes
-    # remove mediawiki-29.0/ from path
+    # remove mediawiki-1.29.0/ from path
     extra_opts: --transform=s/^mediawiki-[0-9\.]*\///
+  # vars to known if current machine have mediawiki files
+  # check presence in next task
+  register: archive_uncompressed
 
 - name: "mediawiki configuration"
   become: yes
@@ -39,6 +42,8 @@
   # multiple time in parallel from different hosts
   run_once: yes
   delegate_to: "{{item}}"
+  # Check if we have mediawiki files on current host
+  when: "hostvars[item].archive_uncompressed is defined"
   with_items: "{{groups.apache}}"
 
 - name: "mediawiki db update"
