@@ -1,0 +1,12 @@
+---
+
+- name: "Callback test"
+  hosts: localhost
+  gather_facts: no
+  tasks:
+    - name: "Callback test"
+      debug:
+        msg: "simple test"
+    - name: "CMD error"
+      shell: ls -l /does/not/exist
+      ignore_errors: yes
