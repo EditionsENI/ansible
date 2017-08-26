@@ -10,8 +10,21 @@
 - name: "MediaWiki apache configuration"
   hosts: apache
   # one, all hosts
-  serial: [ "1", "100%" ]
+  serial: [ "1", "50%" ]
   tags: "apache"
   gather_facts: no
+  pre_tasks:
+    - name: "disable this Apache instance"
+      file:
+        path: "/var/www/html/disabled"
+        state: touch
+    - name: "wait haproxy to ignore this host"
+      pause:
+        seconds: 2
   roles:
     - role: "mediawiki/configuration"
+  post_tasks:
+    - name: "enable this Apache instance"
+      file:
+        path: "/var/www/html/disabled"
+        state: absent
