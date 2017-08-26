@@ -7,5 +7,11 @@ __metaclass__ = type
 from ansible.plugins.callback.default import CallbackModule as CallbackModule_default
 from ansible import constants as C
 
+import json
+
 class CallbackModule(CallbackModule_default):
-    pass
+    CALLBACK_VERSION = 2.0
+    CALLBACK_NAME = 'test'
+
+    def _dump_results(self, result, indent=None, sort_keys=True, keep_invocation=False):
+        return CallbackModule_default._dump_results(self, result, indent=4, sort_keys=True, keep_invocation=False)
