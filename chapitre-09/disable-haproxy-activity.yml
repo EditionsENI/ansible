@@ -1,0 +1,25 @@
+---
+
+- name: "Disable haproxy activity"
+  hosts: apache
+  gather_facts: no
+  tasks:
+    - name: "Apache configuration to detect haproxy activity"
+      copy:
+        dest: "/etc/httpd/conf.d/detect-haproxy-activity.conf"
+        content: "SetEnvIf Request_URI /disabled dontlog"
+        owner: "apache"
+        group: "apache"
+        mode: "0640"
+      changed_when: yes
+    - name: "Disable log when haproxy activity is detected"
+      lineinfile:
+        path: "/etc/httpd/conf/httpd.conf"
+        line: '\1CustomLog "logs/access_log" combined env=!dontlog'
+        regexp: '^(\s*)CustomLog'
+        backrefs: yes
+      changed_when: yes
+    - name: "Reload apache configuration"
+      service:
+        name: "httpd"
+        state: "reloaded"
