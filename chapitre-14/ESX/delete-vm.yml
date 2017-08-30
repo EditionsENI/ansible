@@ -17,5 +17,3 @@
         # machine configuration
         name: "{{vm_to_create}}"
         state: "absent"
-      environment:
-        LC_ALL: C

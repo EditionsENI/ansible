@@ -12,3 +12,5 @@ vm_hardware:
   #disk:
   #  - size_gb: 5
   #    type: thin
+
+vm_root_password: "your root password goes here"

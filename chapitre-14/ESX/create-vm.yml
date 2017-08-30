@@ -18,3 +18,26 @@
         state: "poweredon"
         hardware: "{{vm_hardware}}"
         template: "{{vm_template}}"
+    - name: "Set hostname/IP"
+      vmware_vm_shell:
+        validate_certs: no
+        hostname: "{{vmware_hostname}}"
+        username: "{{vmware_username}}"
+        password: "{{vmware_password}}"
+        datacenter: "{{vmware_datacenter}}"
+        vm_id: "{{vm_to_create}}"
+        vm_username: "root"
+        vm_password: "{{vm_root_password}}"
+        vm_shell: "/usr/bin/hostnamectl"
+        vm_shell_args: "set-hostname {{vm_to_create}} --static"
+        vm_shell_env: [ "PATH=/bin:/usr/bin" ]
+        vm_shell_cwd: "/tmp"
+      with_items:
+      - cmd: "/usr/bin/hostnamectl"
+        args: "set-hostname {{vm_to_create}} --static"
+      - cmd: "/usr/bin/nmcli"
+        args: "connection modify ens32 ipv4.addresses 192.168.0.1/24"
+      until: retry.failed is not defined
+      delay: 2
+      retries: 30
+      register: retry
