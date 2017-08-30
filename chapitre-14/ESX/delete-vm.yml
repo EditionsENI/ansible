@@ -1,0 +1,21 @@
+---
+
+- name: "Delete vm instance"
+  hosts: localhost
+  gather_facts: no
+  tasks:
+    - name: "Delete VM"
+      vmware_guest:
+        # VMWare configuration
+        hostname: "{{vmware_hostname}}"
+        username: "{{vmware_username}}"
+        password: "{{vmware_password}}"
+        datacenter: "{{vmware_datacenter}}"
+        validate_certs: no
+        force: yes
+        folder: "{{vmware_folder}}"
+        # machine configuration
+        name: "{{vm_to_create}}"
+        state: "absent"
+      environment:
+        LC_ALL: C
