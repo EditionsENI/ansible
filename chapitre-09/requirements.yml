@@ -1,0 +1,5 @@
+# Install a role from GitHub
+- name: mediawiki
+  src: https://github.com/Yannig/mediawiki-role
+
+- src: viniciusfs.java
