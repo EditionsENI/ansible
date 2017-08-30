@@ -1,0 +1,37 @@
+---
+
+- name: "Create ec2 instance"
+  hosts: localhost
+  gather_facts: no
+  tasks:
+    - name: "Configure SSH access"
+      ec2_group:
+        name: "test"
+        description: "SSH access to test server"
+        region: us-east-2
+        rules:
+          - proto: tcp
+            from_port: 22
+            to_port: 22
+            cidr_ip: 0.0.0.0/0
+    - name: "Upload my public key"
+      ec2_key:
+        name: "mykey"
+        region: "us-east-2"
+        key_material: "{{ item }}"
+      with_file: "~/.ssh/id_rsa.pub"
+    - name: "Provision a test instance"
+      ec2:
+        key_name: "mykey"
+        group: "test"
+        instance_type: "t2.micro"
+        image: "ami-cfdafaaa"
+        wait: true
+        region: "us-east-2"
+        instance_tags:
+          type: "test"
+        count_tag:
+          type: "test"
+        exact_count: 1
+      register: ec2
+    #- debug: var=ec2

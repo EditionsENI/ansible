@@ -1,0 +1,18 @@
+---
+
+- name: "Remove ec2 instance"
+  hosts: localhost
+  gather_facts: no
+  tasks:
+    - name: "Remove a test instance"
+      ec2:
+        region: "us-east-2"
+        instance_type: "t2.micro"
+        image: "ami-cfdafaaa"
+        wait: true
+        instance_tags:
+          type: "test"
+        count_tag:
+          type: "test"
+        exact_count: 0
+      register: ec2
