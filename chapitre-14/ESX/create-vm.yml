@@ -3,28 +3,7 @@
 - name: "Create vm instance"
   hosts: localhost
   gather_facts: no
-  vars:
-    vmware_hostname:   "vcenter"
-    vmware_username:   "ansible"
-    vmware_password:   "password"
-    vmware_datacenter: "TEST"
-    vmware_folder:     "/ANSIBLE"
-    vm_to_create:      "test"
-    vm_template:       "RHEL73"
-    vm_hardware:
-      memory_mb: "4096"
-      num_cpus:  "2"
-      # Disk are handled by template.
-      #disk:
-      #  - size_gb: 5
-      #    type: thin
   tasks:
-    - name: "Get all running VM"
-      vmware_vm_facts:
-        validate_certs: no
-        hostname: "{{vmware_hostname}}"
-        username: "{{vmware_username}}"
-        password: "{{vmware_password}}"
     - name: "Create VM"
       vmware_guest:
         # VMWare configuration
@@ -36,10 +15,6 @@
         folder: "{{vmware_folder}}"
         # machine configuration
         name: "{{vm_to_create}}"
-        state: "present"
+        state: "poweredon"
         hardware: "{{vm_hardware}}"
         template: "{{vm_template}}"
-        wait_for_ip_address: no
-      environment:
-        LC_ALL: C
-      when: _.virtual_machines[vm_to_create] is not defined
