@@ -1,0 +1,10 @@
+---
+
+- name: "Install process explorer"
+  hosts: win
+  gather_facts: no
+  tasks:
+    - name: "Install procexp"
+      win_chocolatey:
+        name: "procexp"
+        state: present
