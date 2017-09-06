@@ -1,0 +1,17 @@
+---
+
+- name: "Table count"
+  hosts: mysql
+  gather_facts: no
+  tasks:
+    - name: "Put sql file"
+      copy:
+        src: "test.sql"
+        dest: "/tmp/test.sql"
+    - name: "Launch mysql"
+      shell: mysql mediawiki < /tmp/test.sql
+      register: mysql
+    - name: "Table count"
+      debug:
+        var: mysql.stdout_lines[-1]
+

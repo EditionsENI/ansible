@@ -1,0 +1,24 @@
+---
+
+- name: "Create schema"
+  hosts: localhost
+  gather_facts: no
+  vars:
+    schema_v1:
+      personnes: [ "nom", "prenom" ]
+    schema_v2:
+      personnes: [ "nom", "prenom", "date_naissance" ]
+  tasks:
+    - file: path=/tmp/test.db state=absent
+    - name: "Create schema"
+      db_schema:
+        db_url: "sqlite:////tmp/test.db"
+        spec: "{{schema_v1}}"
+    - name: "Update schema"
+      db_schema:
+        db_url: "sqlite:////tmp/test.db"
+        spec: "{{schema_v2}}"
+    - name: "No modification"
+      db_schema:
+        db_url: "sqlite:////tmp/test.db"
+        spec: "{{schema_v1}}"
