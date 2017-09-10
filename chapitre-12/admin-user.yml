@@ -5,13 +5,18 @@
   become: yes
   vars:
     admin_password: "Ansibl3!zzZ"
+    admin_hash:     "{{admin_password|password_hash}}"
   tasks:
     - name: "Read previous hash"
       getent:
         database: "shadow"
         key: "admin"
-    - debug: var=getent_shadow.admin[0]
+        fail_key: no
+    - name: "Set hash password to old value"
+      set_fact:
+        admin_hash: "{{getent_shadow.admin[0]}}"
+      when: getent_shadow.admin.0 is defined and admin_password|checkpw(getent_shadow.admin[0])
     - name: "Handle admin user"
       user:
-        name: "admin"
-        password: "{{admin_password|password_hash}}"
+        name:     "admin"
+        password: "{{admin_hash}}"
