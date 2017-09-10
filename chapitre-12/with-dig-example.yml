@@ -1,0 +1,9 @@
+---
+
+- name: "Show gmail.com MX records"
+  hosts: localhost
+  gather_facts: no
+  tasks:
+    - name: "Show each MX records"
+      debug: var=item
+      with_dig: [ "gmail.com./MX", "flat=0"]
