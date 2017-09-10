@@ -1,0 +1,12 @@
+---
+
+- name: "Extract YAML"
+  hosts: localhost
+  tasks:
+    - name: "Get file content"
+      shell: cat personnes.yaml
+      register: raw_personnes
+    - name: "Extract YAML content"
+      set_fact:
+        personnes: "{{raw_personnes.stdout|from_yaml}}"
+    - debug: var=personnes

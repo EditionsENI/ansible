@@ -1,0 +1,17 @@
+---
+
+- name: "Handle admin user"
+  hosts: localhost
+  become: yes
+  vars:
+    admin_password: "Ansibl3!zzZ"
+  tasks:
+    - name: "Read previous hash"
+      getent:
+        database: "shadow"
+        key: "admin"
+    - debug: var=getent_shadow.admin[0]
+    - name: "Handle admin user"
+      user:
+        name: "admin"
+        password: "{{admin_password|password_hash}}"
