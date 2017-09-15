@@ -1,18 +1,18 @@
 ---
 
-- name: "Installation Apache"
+- name: "Apache installation"
   hosts: all
   tasks:
-    - name: "Installation package apache"
+    - name: "Install package apache"
       yum:
         name: "httpd"
         state: "present"
-    - name: "Démarrage du service apache"
+    - name: "Start apache service"
       service:
         name: "httpd"
         state: "started"
         enabled: yes
-    - name: "Recopie du fichier test.html"
+    - name: "Copy test.html"
       copy:
         src: "test.html"
         dest: "/var/www/html"
