@@ -1,0 +1,9 @@
+---
+
+- name: "Test keepass lookup"
+  hosts: localhost
+  gather_facts: no
+  tasks:
+    - name: "Retrieve simple password"
+      debug:
+        msg: "{{lookup('keepass', 'test-keepass.kdbx', 'ansible', 'admin')}}"
