@@ -1,7 +1,7 @@
 ---
 
 - name: "Import Let's Encrypt certificate"
-  hosts: central
+  hosts: localhost
   gather_facts: no
   tasks:
     - name: "Import isrgrootx1.pem"
@@ -13,4 +13,4 @@
         cert_alias: "letsencrypt2"
         state: present
         remote_src: no
-      #no_log: yes
+      no_log: yes
