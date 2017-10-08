@@ -1,0 +1,27 @@
+---
+
+- name: "Create docker network"
+  hosts: localhost
+  gather_facts: no
+  tasks:
+    - name: "Create docker network"
+      docker_network:
+        name: "{{network_name}}"
+        state: present
+
+- name: "Create docker plateform"
+  hosts: [ "all" ]
+  gather_facts: no
+  vars:
+    ansible_connection: local
+  tasks:
+    - name: "Create containers"
+      docker_container:
+        name:         "{{inventory_hostname}}"
+        hostname:     "{{inventory_hostname}}"
+        networks:
+          - name:     "{{network_name}}"
+        image:        "{{docker_image|d('centos/systemd')}}"
+        volumes:      [ '/run', '/sys/fs/cgroup' ]
+        privileged:   yes
+        state:        started
