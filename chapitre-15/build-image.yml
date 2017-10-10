@@ -1,0 +1,10 @@
+---
+
+- name: "Build docker images"
+  hosts: localhost
+  gather_facts: no
+  tasks:
+    - name: "Build custom-ubuntu image"
+      docker_image:
+        name: "custom-ubuntu"
+        path: "custom-ubuntu"
