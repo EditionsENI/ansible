@@ -1,26 +1,26 @@
 ---
 
-- name: "Génération fichier html des machines de notre inventaire"
+- name: "Generate html file for each host"
   hosts: all
   gather_facts: yes
   vars:
-    inventaire_central: "inventaire-central"
-    rep_template:       "/var/www/html/inventaire"
+    host_inventory: "central-inventory"
+    inventory_dir:  "/var/www/html/inventory"
   tasks:
-    - name: "Création du répertoire des templates"
+    - name: "Create template directory"
       file:
-        path: "{{rep_template}}"
+        path: "{{inventory_dir}}"
         owner: "apache"
         group: "apache"
         mode: "0755"
         state: "directory"
-      # Lancement de cette tâche sur la machine de centralisation
-      delegate_to: "{{inventaire_central}}"
-      # Comme nous n'avons qu'une seule machine centrale,
-      # pas besoin d'exécuter plusieurs fois cette tâche
+      # Delegate this execution on central machine
+      delegate_to: "{{host_inventory}}"
+      # As we only have one central machine,
+      # run only one time this task
       run_once: yes
-    - name: "Génération fichier html"
+    - name: "html file generation"
       template:
         src: "machine.html.j2"
-        dest: "{{rep_template}}/{{inventory_hostname}}.html"
-      delegate_to: "{{inventaire_central}}"
+        dest: "{{inventory_dir}}/{{inventory_hostname}}.html"
+      delegate_to: "{{host_inventory}}"

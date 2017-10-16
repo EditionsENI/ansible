@@ -1,26 +1,26 @@
 ---
 
-- name: "Installation Apache"
+- name: "Apache installation"
   hosts: inventaire
   handlers:
-    - name: "Redémarrage du service apache"
+    - name: "Apache restart"
       service:
         name: "httpd"
         state: "restarted"
   tasks:
-    - name: "Installation package apache"
+    - name: "Apache package installation"
       yum:
         name: "httpd"
         state: "present"
-    - name: "Configuration Apache"
+    - name: "Apache configuration"
       template:
         src: "inventaire.conf.j2"
         dest: "/etc/httpd/conf.d/inventaire.conf"
         owner: "apache"
         group: "apache"
-      # En cas de changement, redémarrage d'apache
-      notify: [ "Redémarrage du service apache" ]
-    - name: "Démarrage du service apache"
+      # Notify Apache restart handler
+      notify: [ "Apache restart" ]
+    - name: "Start apache service"
       service:
         name: "httpd"
         state: "started"
