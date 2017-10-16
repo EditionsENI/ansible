@@ -1,19 +1,19 @@
 ---
 
-- name: "Récupération informations et stockage en local"
+- name: "Retrieve facts and store them locally"
   hosts: all
   gather_facts: no
   connection: local
   tasks:
-    - name: "Récupération informations"
+    - name: "Gather facts"
       setup:
         gather_subset: "!all"
       connection: "{{omit}}"
-    - name: "Création d'un répertoire pour chaque machine"
+    - name: "Create directory for each machine"
       file:
         path: "/tmp/{{inventory_hostname}}"
         state: "directory"
-    - name: "Création d'un fichier avec les informations de chaque machine"
+    - name: "Create file information for each machine"
       copy:
         content: |
           Distribution : {{ansible_distribution}}

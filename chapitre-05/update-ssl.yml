@@ -1,19 +1,27 @@
 ---
 
-- name: "Inventaire des machines"
+- name: "Gather hosts facts"
   hosts: all
   gather_facts: yes
   gather_subset: "!all"
   tasks:
-    - name: "Affectation des machines"
+    - name: "Hosts affectation"
       group_by:
         key: "{{ansible_distribution}}-{{ansible_distribution_major_version}}"
     - debug: var=ansible_distribution,ansible_distribution_major_version
 
-- name: "Update SSL sur machines CentOS 7"
+- name: "Update SSL on CentOS 7 machines"
   hosts: "CentOS-7"
   gather_facts: no
   tasks:
     - yum:
+        name: "openssl"
+        state: "latest"
+
+- name: "Update SSL on debian 8 machines"
+  hosts: "debian-8"
+  gather_facts: no
+  tasks:
+    - apt:
         name: "openssl"
         state: "latest"
