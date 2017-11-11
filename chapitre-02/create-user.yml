@@ -1,6 +1,0 @@
----
-
-- name: "Création utilisateur exploit"
-  hosts: all
-  tasks:
-    - user: name=exploit state=present
