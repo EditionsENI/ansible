@@ -1,4 +1,4 @@
-CHAPTERS=$(wildcard chapitre-*/)
+CHAPTERS=$(sort $(wildcard chapitre-*/))
 TARGETS=$(CHAPTERS:/=.tar.gz)
 
 %.tar.gz: %
