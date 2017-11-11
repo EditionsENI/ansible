@@ -11,7 +11,7 @@ mysql1
 haproxy1
 
 [haproxy:vars]
-docker_image="solita/ubuntu-systemd"
+docker_image="custom-ubuntu"
 
 [all:vars]
 network_name=test.eni

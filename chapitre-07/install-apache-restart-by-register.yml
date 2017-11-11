@@ -7,10 +7,10 @@
       yum:
         name: "httpd"
         state: "present"
-    - name: "Apache configuration "
+    - name: "Apache configuration"
       template:
-        src: "inventaire.conf.j2"
-        dest: "/etc/httpd/conf.d/inventaire.conf"
+        src: "inventory.conf.j2"
+        dest: "/etc/httpd/conf.d/inventory.conf"
         owner: "apache"
         group: "apache"
       # register execution result for template creation

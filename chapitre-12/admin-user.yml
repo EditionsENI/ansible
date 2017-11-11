@@ -15,7 +15,9 @@
     - name: "Set hash password to old value"
       set_fact:
         admin_hash: "{{getent_shadow.admin[0]}}"
-      when: getent_shadow.admin.0 is defined and admin_password|checkpw(getent_shadow.admin[0])
+      when: >
+        getent_shadow.admin.0 is defined and
+        admin_password|checkpw(getent_shadow.admin[0])
     - name: "Handle admin user"
       user:
         name:     "admin"
