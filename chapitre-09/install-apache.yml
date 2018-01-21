@@ -1,6 +1,0 @@
----
-
-- name: "Apache installation"
-  hosts: apache
-  roles:
-    - role: "apache"
