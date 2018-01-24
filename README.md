@@ -1,2 +1,2 @@
 # eni-ansible
-Exemples utilisé dans le bouquin ENI/Ansible
+Code source des exemples utilisés dans le livre ENI/Ansible
