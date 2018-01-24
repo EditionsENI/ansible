@@ -8,3 +8,4 @@ all: $(TARGETS)
 
 clean:
 	rm -f *.tar.gz
+	find . -name "*.retry" | xargs rm -f
