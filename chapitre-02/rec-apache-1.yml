@@ -1,0 +1,4 @@
+all:
+  hosts:
+    rec-apache-1:
+      ansible_user: root
