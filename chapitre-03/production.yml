@@ -1,0 +1,14 @@
+all:
+  vars:
+    ansible_connection: local
+  children:
+    haproxy:
+      hosts:
+        prod-haproxy: {}
+    apache:
+      hosts:
+        prod-apache-1: {}
+        prod-apache-2: {}
+    mysql:
+      hosts:
+        prod-mysql-[1:2]: {}

@@ -1,0 +1,32 @@
+all:
+  vars:
+    ansible_connection: local
+
+linux:
+  children:
+    apache:
+      hosts:
+        rec-apache-1:
+          apache_url: "rec.wiki.localdomain"
+
+    mysql:
+      hosts:
+        rec-mysql-1:
+          mysql_user_password: "MyPassWord!"
+
+windows:
+  children:
+    active-directory:
+      hosts:
+        active-directory-1: {}
+  vars:
+    ansible_connection: "winrm"
+
+container:
+  children:
+    microservices:
+      hosts:
+        container-1:
+          ansible_connection: "docker"
+      vars:
+        ansible_connection: "localhost"
