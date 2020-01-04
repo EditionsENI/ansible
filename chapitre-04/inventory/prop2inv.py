@@ -2,63 +2,42 @@
 # -*- coding: utf-8 -*-
 # Read a properties a give it back to Ansible as an inventory
 
-import os,argparse,json
+from ansible.plugins.inventory import BaseInventoryPlugin
 
-parser = argparse.ArgumentParser(
-  description='Properties converter: convert properties into Ansible inventory.'
-)
-parser.add_argument('--host'  , help='Get properties of machines running on specified host.')
-parser.add_argument('--list'  , help='Get data of all properties machines (default: True).',
-                                action='store_true', default=True)
-parser.add_argument('--pretty', help='Pretty format (default: False).',
-                                action='store_true', default=False)
-options = parser.parse_args()
+class InventoryModule(BaseInventoryPlugin):
 
-# default structure
-result = {}
-result['all'] = {'vars': {}, 'hosts': [] }
-result['_meta'] = {'hostvars': {}}
+    NAME = 'prop2inv'
 
-# default empty groups
-for group in [ 'apache', 'mysql' ]:
-    result[group] = {'vars': {}, 'hosts': [] }
+    def parse(self, inventory, loader, path, cache=True):
+        super(InventoryModule, self).parse(inventory, loader, path, cache)
+        config = self._read_config_data(path)
+        properties_file = config.get("properties_file", "prop2inv.properties")
 
-# Retrieve env value for file properties
-# If not set, use default (prop2inv.properties)
-properties_file = os.environ.get('PROPERTIES_FILE', 'prop2inv.properties')
+        # Load properties in hash map
+        properties = {}
+        with open(properties_file) as p:
+            for line in p.readlines():
+                (k, v) = line.split('=')
+                properties[k.strip()] = v.strip()
 
-# Read file then forget it
-prop_file = file(properties_file)
-lines = prop_file.readlines()
-prop_file.close()
+        self.inventory.add_group("mysql")
+        self.inventory.add_group("apache")
 
-# Load properties in hash map
-properties = {}
-for line in lines:
-    (k, v) = line.split('=')
-    properties[k.strip()] = v.strip()
+        # Load db host
+        if properties.get('db.host'):
+            for host in properties.get('db.host').split(','):
+                self.inventory.add_host(host.strip(), group="mysql")
 
-# Load db host
-if properties.get('db.host'):
-    result['mysql']['hosts'] = [ x.strip() for x in properties.get('db.host').split(',')]
-    # Add current hosts in group 'all'
-    result['all']['hosts'] += result['mysql']['hosts']
+        # Load Apache host
+        if properties.get('apache.hosts'):
+            for host in properties.get('apache.hosts').split(','):
+                self.inventory.add_host(host.strip(), group="apache")
 
-# Load Apache host
-if properties.get('apache.hosts'):
-    result['apache']['hosts'] = [ x.strip() for x in properties.get('apache.hosts').split(',')]
-    # Add current hosts in group 'all'
-    result['all']['hosts'] += result['apache']['hosts']
-
-# Load mysql vars (if set)
-for var in [ 'db.user', 'db.password' ]:
-    if properties.get(var):
-        # Ansible cannot use vars with '.' in there name
-        ansible_var_name = var.strip().replace('.', '_')
-        # Expose this variable value into mysql group
-        result['mysql']['vars'][ansible_var_name] = properties.get(var).strip()
-
-if options.pretty:
-    print(json.dumps(result, sort_keys=True, indent=4))
-else:
-    print(json.dumps(result))
+        # Load mysql vars (if set)
+        for var in [ 'db.user', 'db.password' ]:
+            if properties.get(var):
+                # Ansible cannot use vars with '.' in there name
+                ansible_var_name = var.strip().replace('.', '_')
+                # Expose this variable value into mysql group
+                value = properties.get(var).strip()
+                self.inventory.set_variable("mysql", ansible_var_name, value)
