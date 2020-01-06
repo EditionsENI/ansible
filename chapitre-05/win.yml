@@ -1,0 +1,7 @@
+win:
+  hosts:
+    windows1:
+      ansible_user: Administrator
+      ansible_password: XXXXXXXX
+      ansible_connection: winrm
+      ansible_winrm_server_cert_validation: ignore
