@@ -9,9 +9,12 @@ class InventoryModule(BaseInventoryPlugin):
     NAME = 'prop2inv'
 
     def parse(self, inventory, loader, path, cache=True):
-        super(InventoryModule, self).parse(inventory, loader, path, cache)
+        super(InventoryModule, self).parse(
+          inventory, loader, path, cache
+        )
         config = self._read_config_data(path)
-        properties_file = config.get("properties_file", "prop2inv.properties")
+        properties_file = config.get("properties_file",
+                                     "prop2inv.properties")
 
         # Load properties in hash map
         properties = {}
@@ -40,4 +43,6 @@ class InventoryModule(BaseInventoryPlugin):
                 ansible_var_name = var.strip().replace('.', '_')
                 # Expose this variable value into mysql group
                 value = properties.get(var).strip()
-                self.inventory.set_variable("mysql", ansible_var_name, value)
+                self.inventory.set_variable(
+                  "mysql", ansible_var_name, value
+                )
