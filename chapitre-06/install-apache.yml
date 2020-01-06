@@ -1,6 +1,21 @@
 ---
 
 - name: "Apache installation"
-  hosts: apache
-  roles:
-    - role: "apache"
+  hosts: inventaire
+  tasks:
+    - name: "Apache package installation"
+      yum:
+        name: "httpd"
+        state: "present"
+    - name: "Apache configuration"
+      template:
+        src: "inventory.conf.j2"
+        dest: "/etc/httpd/conf.d/inventory.conf"
+        owner: "apache"
+        group: "apache"
+    - name: "Start apache service"
+      service:
+        name: "httpd"
+        state: "restarted"
+        enabled: yes
+      tags: [ "restart" ]

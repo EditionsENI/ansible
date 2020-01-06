@@ -1,0 +1,14 @@
+[apache]
+apache[1:4]
+
+[apache:vars]
+php_install=yes
+
+[mysql]
+mysql1
+
+[haproxy]
+haproxy1
+
+[haproxy:vars]
+ansible_python_interpreter=/usr/bin/python3

@@ -1,0 +1,59 @@
+---
+
+- name: "mediawiki directory"
+  file:
+    path: "{{mediawiki_directory}}"
+    owner: "apache"
+    group: "apache"
+    state: directory
+
+- name: "uncompress mediawiki archive"
+  unarchive:
+    src: "{{mediawiki_archive_url}}"
+    dest: "{{mediawiki_directory}}"
+    owner: "apache"
+    group: "apache"
+    remote_src: yes
+    # remove mediawiki-1.29.0/ from path
+    extra_opts: --transform=s/^mediawiki-[0-9\.]*\///
+  # vars to known if current machine have mediawiki files
+  # check presence in next task
+  register: archive_uncompressed
+
+- name: "mediawiki configuration"
+  become: yes
+  become_user: "apache"
+  command:
+    php install.php --scriptpath /{{mediawiki_name}}
+       --dbname mediawiki --lang fr
+       --dbuser {{mediawiki_db_user}}
+       --dbpass {{mediawiki_db_password}}
+       --pass {{mediawiki_admin_password}}
+       --dbserver {{mediawiki_db_host}}
+       {{mediawiki_title}} {{mediawiki_admin_user}}
+  args:
+    # If LocalSettings exists, we skip this command
+    creates: "{{mediawiki_directory}}/LocalSettings.php"
+    chdir: "{{mediawiki_maintenance_directory}}"
+  # All commands are launched from the first machine
+  # Using delegate_to and with_items we can launch the command
+  # one machine at a time
+  # This way, we are sure that our command is never launched
+  # multiple time in parallel from different hosts
+  run_once: yes
+  delegate_to: "{{item}}"
+  # Check if we have mediawiki files on current host
+  when: "hostvars[item].archive_uncompressed is defined"
+  with_items: "{{groups.apache}}"
+
+- name: "mediawiki db update"
+  become: yes
+  become_user: "apache"
+  command:
+    php update.php --quick
+  args:
+    chdir: "{{mediawiki_maintenance_directory}}"
+  # Update need to be launched only once
+  run_once: yes
+  register: _
+  changed_when: "' ...done.' in _.stdout"
