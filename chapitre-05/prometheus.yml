@@ -1,0 +1,27 @@
+---
+
+- name: "Install Prometheus"
+  hosts: all
+  gather_facts: no
+  tasks:
+
+    - name: "Install Prometheus"
+      win_chocolatey:
+        name: "prometheus"
+        state: present
+
+    - name: "Configure firewall for prometheus"
+      win_firewall_rule:
+        name:      "Prometheus server"
+        localport: "9090"
+        action:    allow
+        direction: in
+        protocol:  tcp
+        state:     present
+        enabled:   yes
+
+    - name: "Activate Prometheus"
+      win_service:
+        name: "prometheus-service"
+        state: started
+        start_mode: auto

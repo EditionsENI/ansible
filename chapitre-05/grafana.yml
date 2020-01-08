@@ -1,0 +1,42 @@
+---
+
+- name: "Install Grafana"
+  hosts: all
+  gather_facts: no
+  tasks:
+
+    - name: "Install Grafana and nssm"
+      win_chocolatey:
+        name: ["grafana", "nssm"]
+        state: present
+
+    - name: "Configure firewall for grafana"
+      win_firewall_rule:
+        name:      "Grafana server"
+        localport: "3000"
+        action:    allow
+        direction: in
+        protocol:  tcp
+        state:     present
+        enabled:   yes
+
+    - name: "Find grafana"
+      win_find:
+        patterns: 'grafana-server.exe'
+        paths: 'C:\ProgramData\chocolatey\lib\grafana'
+        recurse: yes
+      register: _
+
+    - name: "Create service for Grafana"
+      tags: "service"
+      win_nssm:
+        name:        "grafana-server"
+        application: '{{_.files[0].path}}'
+
+    - name: "Start grafana"
+      win_service:
+        name: "grafana-server"
+        description: "Grafana server"
+        dependencies: [ "Tcpip" ]
+        state: started
+        start_mode: auto

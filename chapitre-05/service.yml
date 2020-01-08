@@ -1,0 +1,10 @@
+---
+
+- name: "Install Grafana"
+  hosts: all
+  gather_facts: no
+  tasks:
+    - name: "Install NSSM package (service handling)"
+      win_chocolatey:
+        name: "nssm"
+        state: present
