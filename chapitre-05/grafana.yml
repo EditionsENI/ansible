@@ -20,23 +20,29 @@
         state:     present
         enabled:   yes
 
-    - name: "Find grafana"
-      win_find:
-        patterns: 'grafana-server.exe'
-        paths: 'C:\ProgramData\chocolatey\lib\grafana'
-        recurse: yes
-      register: _
+    - block:
+        - name: "Start grafana"
+          # Store service definition in a YAML variable
+          win_service: &start-grafana-service
+            name: "grafana-server"
+            description: "Grafana server"
+            dependencies: [ "Tcpip" ]
+            state: started
+            start_mode: auto
 
-    - name: "Create service for Grafana"
-      tags: "service"
-      win_nssm:
-        name:        "grafana-server"
-        application: '{{_.files[0].path}}'
+      rescue:
+        - name: "Find grafana"
+          win_find:
+            patterns: 'grafana-server.exe'
+            paths: 'C:\ProgramData\chocolatey\lib\grafana'
+            recurse: yes
+          register: _
 
-    - name: "Start grafana"
-      win_service:
-        name: "grafana-server"
-        description: "Grafana server"
-        dependencies: [ "Tcpip" ]
-        state: started
-        start_mode: auto
+        - name: "Create service for Grafana"
+          win_nssm:
+            name:        "grafana-server"
+            application: '{{_.files[0].path}}'
+
+        - name: "Start grafana"
+          # Retrieve service definition from YAML variable
+          win_service: *start-grafana-service
