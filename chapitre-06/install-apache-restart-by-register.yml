@@ -1,7 +1,7 @@
 ---
 
 - name: "Apache installation"
-  hosts: inventaire
+  hosts: inventory
   tasks:
     - name: "Apache package installation"
       yum:
@@ -22,7 +22,7 @@
         name: "httpd"
         state: "restarted"
       # restart if necessary
-      when: apache_conf.changed
+      when: apache_conf is changed
     - name: "Start apache service"
       service:
         name: "httpd"
