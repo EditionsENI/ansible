@@ -1,6 +1,6 @@
-inventaire:
+inventory:
   hosts:
-    inventaire-central: {}
+    central-inventory: {}
 
 apache:
   hosts:

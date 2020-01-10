@@ -1,7 +1,7 @@
 ---
 
 - name: "Apache installation"
-  hosts: inventaire
+  hosts: inventory
   tasks:
     - name: "Apache package installation"
       yum:
