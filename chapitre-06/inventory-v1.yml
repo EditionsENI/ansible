@@ -1,0 +1,10 @@
+---
+
+- name: "Generate html file for each host"
+  hosts: all
+  connection: local
+  tasks:
+    - name: "html file generation"
+      template:
+        src: "machine.html.j2"
+        dest: "{{playbook_dir}}/{{inventory_hostname}}.html"

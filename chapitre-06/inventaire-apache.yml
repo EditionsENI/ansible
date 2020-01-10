@@ -1,0 +1,8 @@
+inventaire:
+  hosts:
+    inventaire-central: {}
+
+apache:
+  hosts:
+    rec-apache-1: {}
+    rec-apache-2: {}
