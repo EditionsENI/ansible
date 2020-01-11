@@ -1,7 +1,7 @@
 ---
 
 - name: "Apache installation for inventory"
-  hosts: inventaire
+  hosts: apache
   roles:
     - role: "apache"
     - role: "apache-inventaire"

@@ -1,0 +1,9 @@
+apache:
+  hosts:
+    apache1: {}
+  vars:
+    php_install: yes
+
+mysql:
+  hosts:
+    mysql1: {}
