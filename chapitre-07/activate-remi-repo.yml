@@ -12,8 +12,8 @@
       yum:
         name: "https://rpms.remirepo.net/enterprise/remi-release-7.rpm"
         state: present
-    - name: "install php70 packages"
+    - name: "install php73 packages"
       yum:
         name: "php,php-mysql,php-xml"
         state: "latest"
-        enablerepo: "remi-php70"
+        enablerepo: "remi-php73"
