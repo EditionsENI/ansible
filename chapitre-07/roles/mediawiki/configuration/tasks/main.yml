@@ -20,6 +20,8 @@
 - name: "mediawiki configuration"
   become: yes
   become_user: "apache"
+  environment:
+    LC_ALL: C
   args:
     chdir: "{{mediawiki_maintenance_directory}}"
   command:
@@ -30,5 +32,3 @@
        --pass {{mediawiki_admin_password}}
        --dbserver {{mediawiki_db_host}}
        {{mediawiki_title}} {{mediawiki_admin_user}}
-  env:
-    LC_ALL: C
