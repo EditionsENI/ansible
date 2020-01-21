@@ -14,7 +14,7 @@
     owner: "apache"
     group: "apache"
     remote_src: yes
-    # remove mediawiki-29.0/ from path
+    # remove mediawiki-xx.x/ from path
     extra_opts: --transform=s/^mediawiki-[0-9\.]*\///
 
 - name: "mediawiki configuration"
