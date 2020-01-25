@@ -12,6 +12,11 @@
         name: "httpd"
         state: "started"
         enabled: yes
+    - name: "Allow http connections"
+      firewalld:
+        service: "http"
+        permanent: yes
+        state: enabled
     - name: "Copy test.html"
       copy:
         src: "test.html"
