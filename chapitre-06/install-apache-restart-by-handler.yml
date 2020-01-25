@@ -20,6 +20,11 @@
         group: "apache"
       # Notify Apache restart handler
       notify: [ "Apache restart" ]
+    - name: "Allow http connections"
+      firewalld:
+        service: "http"
+        permanent: yes
+        state: enabled
     - name: "Start apache service"
       service:
         name: "httpd"
