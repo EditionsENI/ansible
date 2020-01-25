@@ -14,6 +14,7 @@
     owner: "apache"
     group: "apache"
     remote_src: yes
+    setype: httpd_sys_content_t
     # remove mediawiki-xx.x/ from path
     extra_opts: --transform=s/^mediawiki-[0-9\.]*\///
 
