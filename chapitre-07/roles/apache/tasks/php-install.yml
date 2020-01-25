@@ -16,3 +16,9 @@
   changed_when: yes
   # We need to restart apache
   notify: [ "apache restart" ]
+
+- name: "Allow http connections"
+  firewalld:
+    service: "http"
+    permanent: yes
+    state: enabled

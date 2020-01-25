@@ -10,3 +10,9 @@
     name:  "mariadb"
     state: "started"
     enabled: yes
+
+- name: "Allow mariadb connections"
+  firewalld:
+    service: "mysql"
+    permanent: yes
+    state: enabled
