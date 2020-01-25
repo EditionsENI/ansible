@@ -32,7 +32,7 @@
         vm_shell_args: "set-hostname {{vm_to_create}} --static"
         vm_shell_env: [ "PATH=/bin:/usr/bin" ]
         vm_shell_cwd: "/tmp"
-      with_items:
+      loop:
       - cmd: "/usr/bin/hostnamectl"
         args: "set-hostname {{vm_to_create}} --static"
       - cmd: "/usr/bin/nmcli"

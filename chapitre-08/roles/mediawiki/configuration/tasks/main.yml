@@ -36,7 +36,7 @@
     creates: "{{mediawiki_directory}}/LocalSettings.php"
     chdir: "{{mediawiki_maintenance_directory}}"
   # All commands are launched from the first machine
-  # Using delegate_to and with_items we can launch the command
+  # Using delegate_to and loop we can launch the command
   # one machine at a time
   # This way, we are sure that our command is never launched
   # multiple time in parallel from different hosts
@@ -44,7 +44,7 @@
   delegate_to: "{{item}}"
   # Check if we have mediawiki files on current host
   when: "hostvars[item].archive_uncompressed is defined"
-  with_items: "{{groups.apache}}"
+  loop: "{{groups.apache}}"
 
 - name: "mediawiki db update"
   become: yes

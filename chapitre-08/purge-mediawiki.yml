@@ -15,7 +15,7 @@
         name:     "mediawiki"
         host:     "{{item}}"
         state:    absent
-      with_items: "{{groups.apache}}"
+      loop: "{{groups.apache}}"
 
 
 - name: "MediaWiki apache configuration"
