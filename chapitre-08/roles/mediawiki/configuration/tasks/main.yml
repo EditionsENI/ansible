@@ -46,6 +46,12 @@
   when: "hostvars[item].archive_uncompressed is defined"
   loop: "{{groups.apache}}"
 
+- name: "fix mediawiki redirection"
+  lineinfile:
+    path: "{{mediawiki_directory}}/LocalSettings.php"
+    regex: '\$wgServer.*'
+    line: '$wgServer = $_SERVER["HOST"];'
+
 - name: "mediawiki db update"
   become: yes
   become_user: "apache"
