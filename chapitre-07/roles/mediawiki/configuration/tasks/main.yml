@@ -24,6 +24,7 @@
   environment:
     LC_ALL: C
   args:
+    creates: "{{mediawiki_directory}}/LocalSettings.php"
     chdir: "{{mediawiki_maintenance_directory}}"
   command:
     php install.php --scriptpath /{{mediawiki_name}}
@@ -33,3 +34,9 @@
        --pass {{mediawiki_admin_password}}
        --dbserver {{mediawiki_db_host}}
        {{mediawiki_title}} {{mediawiki_admin_user}}
+
+- name: "fix mediawiki redirection"
+  lineinfile:
+    path: "{{mediawiki_directory}}/LocalSettings.php"
+    regex: '\$wgServer.*'
+    line: '$wgServer = $_SERVER["HOST"];'
