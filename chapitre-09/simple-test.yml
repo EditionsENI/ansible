@@ -1,0 +1,11 @@
+---
+
+- name: "Playbook speed test"
+  hosts: localhost
+  gather_facts: no
+  tasks:
+    - name: "Create a bunch of directory"
+      file:
+        path: /tmp/test/{{ item }}
+        state: directory
+      loop: "{{ range(50) | list }}"
