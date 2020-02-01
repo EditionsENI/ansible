@@ -8,11 +8,11 @@
   yum:
     name: "https://rpms.remirepo.net/enterprise/remi-release-7.rpm"
     state: present
-- name: "install php70 packages"
+- name: "install php73 packages"
   yum:
     name: "php,php-mysql,php-xml,php-mbstring,php-mcrypt,php-gd,php-intl"
     state: latest
-    enablerepo: "remi-php70"
+    enablerepo: "remi-php73"
   changed_when: yes
   # We need to restart apache
   notify: [ "apache restart" ]
