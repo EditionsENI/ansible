@@ -1,0 +1,15 @@
+---
+# tasks file for apache
+
+- name: "apache installation"
+  yum:
+    name: "httpd"
+    state: "present"
+- include: "php-install.yml"
+  # force boolean evaluation
+  when: php_install|bool
+- name: "apache service activation"
+  service:
+    name: "httpd"
+    state: "started"
+    enabled: yes
