@@ -1,4 +1,6 @@
 ---
 
+galaxy_info: {} # noqa 701
+
 dependencies:
   - role: "mediawiki/common"
