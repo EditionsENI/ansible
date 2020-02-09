@@ -7,9 +7,12 @@ testinfra_hosts = testinfra.utils.ansible_runner.AnsibleRunner(
 ).get_hosts('all')
 
 
-def test_hosts_file(host):
-    f = host.file('/etc/hosts')
+def test_httpd_is_installed(host):
+    httpd = host.package("httpd")
+    assert httpd.is_installed
 
-    assert f.exists
-    assert f.user == 'root'
-    assert f.group == 'root'
+
+def test_httpd_is_running(host):
+    httpd = host.service("httpd")
+    assert httpd.is_running
+    assert httpd.is_enabled
