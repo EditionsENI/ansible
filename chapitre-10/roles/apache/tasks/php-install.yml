@@ -11,7 +11,7 @@
 - name: "install php73 packages"
   yum:
     name: "php,php-mysql,php-xml,php-mbstring,php-mcrypt,php-gd,php-intl"
-    state: latest
+    state: latest # noqa 403
     enablerepo: "remi-php73"
   changed_when: yes
   # We need to restart apache
