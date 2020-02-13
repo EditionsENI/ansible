@@ -1,0 +1,13 @@
+apache:
+  hosts:
+    apache[1:2]:
+      php_install: yes
+
+mysql:
+  hosts:
+    mysql1: {}
+
+haproxy:
+  hosts:
+    haproxy1:
+      ansible_python_interpreter: "/usr/bin/python3"
