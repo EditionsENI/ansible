@@ -6,4 +6,4 @@
   tasks:
     - name: "Show each MX records"
       debug: var=item
-      with_dig: [ "gmail.com./MX", "flat=0"]
+      loop: "{{ q('dig', 'gmail.com./MX') }}"
