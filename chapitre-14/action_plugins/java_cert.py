@@ -2,7 +2,7 @@
 # -*- encoding: utf-8 -*-
 
 from ansible.plugins.action import ActionBase
-from ansible.constants import mk_boolean as boolean
+from ansible.module_utils.parsing.convert_bool import boolean
 
 class ActionModule(ActionBase):
 
