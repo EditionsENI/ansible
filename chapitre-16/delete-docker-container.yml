@@ -3,11 +3,10 @@
 - name: "Delete docker plateform"
   hosts: [ "all" ]
   gather_facts: no
-  vars:
-    ansible_connection: local
   tasks:
     - name: "Delete containers"
       docker_container:
         name:       "{{inventory_hostname}}"
         force_kill: yes
         state:      absent
+      delegate_to: localhost

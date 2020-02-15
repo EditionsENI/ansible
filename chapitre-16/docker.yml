@@ -1,0 +1,19 @@
+apache:
+  hosts:
+    "apache[1:4]":
+      php_install: yes
+
+mysql:
+  hosts:
+    mysql1: {}
+
+haproxy:
+  hosts:
+    haproxy1: {}
+  vars:
+    docker_image: "jrei/systemd-ubuntu"
+
+all:
+  vars:
+    network_name: test.eni
+    ansible_connection: docker
