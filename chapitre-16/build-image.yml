@@ -4,7 +4,10 @@
   hosts: localhost
   gather_facts: no
   tasks:
-    - name: "Build custom-ubuntu image"
+    - name: "Build centos-httpd image"
       docker_image:
-        name: "custom-ubuntu"
-        path: "custom-ubuntu"
+        name: "centos-httpd"
+        source: build
+        build:
+          path: "centos-httpd"
+          pull: yes

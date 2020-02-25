@@ -1,7 +1,8 @@
 apache:
   hosts:
     "apache[1:4]":
-      php_install: yes
+      docker_image: centos-httpd
+      start_cmd: "{{ omit }}"
 
 mysql:
   hosts:
@@ -12,6 +13,7 @@ haproxy:
     haproxy1: {}
   vars:
     docker_image: "jrei/systemd-ubuntu"
+    privileged: yes
 
 all:
   vars:

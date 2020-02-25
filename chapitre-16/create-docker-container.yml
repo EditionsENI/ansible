@@ -17,12 +17,12 @@
       docker_container:
         name:         "{{inventory_hostname}}"
         hostname:     "{{inventory_hostname}}"
-        command:      "/sbin/init"
+        command:      "{{start_cmd|d('/sbin/init')}}"
         networks:
           - name:     "{{network_name}}"
         image:        "{{docker_image|d('centos')}}"
         tmpfs:        ["/run", "/tmp"]
         volumes:      ["/sys/fs/cgroup:/sys/fs/cgroup:ro"]
-        privileged:   "{{ docker_image is defined }}"
+        privileged:   "{{ privileged|d(False) }}"
         state:        started
       delegate_to: localhost
