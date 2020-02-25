@@ -8,6 +8,7 @@
       docker_image:
         name: "centos-httpd"
         source: build
+        force_source: yes
         build:
           path: "centos-httpd"
           pull: yes

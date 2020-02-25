@@ -9,20 +9,30 @@
         name: "{{network_name}}"
         state: present
 
+- name: "Create Apache"
+  hosts: [ "apache" ]
+  gather_facts: no
+  tasks:
+    - name: "Create Apache containers"
+      docker_container: &docker-container
+        name:         "{{inventory_hostname}}"
+        hostname:     "{{inventory_hostname}}"
+        networks:
+          - name:     "{{network_name}}"
+        image:        "centos-httpd"
+        state:        started
+      delegate_to: localhost
+
 - name: "Create docker plateform"
-  hosts: [ "all" ]
+  hosts: [ "all", "!apache" ]
   gather_facts: no
   tasks:
     - name: "Create containers"
       docker_container:
-        name:         "{{inventory_hostname}}"
-        hostname:     "{{inventory_hostname}}"
-        command:      "{{start_cmd|d('/sbin/init')}}"
-        networks:
-          - name:     "{{network_name}}"
+        <<: *docker-container
+        command:      "/sbin/init"
         image:        "{{docker_image|d('centos')}}"
         tmpfs:        ["/run", "/tmp"]
         volumes:      ["/sys/fs/cgroup:/sys/fs/cgroup:ro"]
         privileged:   "{{ privileged|d(False) }}"
-        state:        started
       delegate_to: localhost
