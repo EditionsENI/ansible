@@ -1,0 +1,29 @@
+---
+
+- name: "MediaWiki db configuration"
+  hosts: mysql
+  gather_facts: no
+  tags: [ "mariadb", "mysql" ]
+  roles:
+    - role: "mediawiki/mariadb"
+
+- name: "MediaWiki apache configuration"
+  hosts: apache
+  # one, all hosts
+  serial: [ "1", "50%" ]
+  tags: "apache"
+  gather_facts: no
+  tasks:
+    - name: "disable this Apache instance"
+      file:
+        path: "/var/www/html/disabled"
+        state: touch
+    - name: "wait haproxy to ignore this host"
+      pause:
+        seconds: 2
+    - include_role:
+        name: "mediawiki/configuration"
+    - name: "enable this Apache instance"
+      file:
+        path: "/var/www/html/disabled"
+        state: absent
