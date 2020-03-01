@@ -1,0 +1,4 @@
+---
+
+- debug: var=global_item,item,ansible_loop
+  loop: [1, 2]
