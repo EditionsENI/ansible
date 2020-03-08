@@ -1,0 +1,14 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: '{{ meta.name }}-keycloak'
+  namespace: '{{ meta.namespace }}'
+spec:
+  ports:
+    - name: "http"
+      port: 8080
+      protocol: TCP
+      targetPort: 8080
+  selector:
+    app: '{{ meta.name }}-keycloak'
+  type: ClusterIP

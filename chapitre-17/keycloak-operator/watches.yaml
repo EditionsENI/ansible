@@ -1,0 +1,5 @@
+---
+- version: v1
+  group: keycloak.eni-editions.com
+  kind: Keycloak
+  role: /opt/ansible/roles/keycloak

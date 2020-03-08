@@ -1,0 +1,28 @@
+kind: StatefulSet
+apiVersion: apps/v1
+metadata:
+  name: '{{ meta.name }}-keycloak'
+  namespace: '{{ meta.namespace }}'
+spec:
+  serviceName: '{{ meta.name }}-keycloak'
+  replicas: {{ size }}
+  selector:
+    matchLabels:
+      app: '{{ meta.name }}-keycloak'
+  template:
+    metadata:
+      labels:
+        app: '{{ meta.name }}-keycloak'
+    spec:
+      containers:
+      - name: keycloak
+        image: "{{ docker_image }}"
+        ports:
+          - name: "http"
+            containerPort: 8080
+            protocol: TCP
+        env:
+          - name: KEYCLOAK_USER
+            value: "{{ keycloak_user }}"
+          - name: KEYCLOAK_PASSWORD
+            value: "{{ keycloak_password }}"
