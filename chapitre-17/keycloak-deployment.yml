@@ -1,0 +1,12 @@
+---
+
+- name: "Keycloak deployment"
+  hosts: localhost
+  gather_facts: no
+  tasks:
+    - name: "create keycloak statefulset and service"
+      k8s:
+        definition: "{{ lookup('file', k8s_file) }}"
+      vars:
+        k8s_file: "k8s/keycloak-{{ item }}.yml"
+      loop: ["statefulset", "service"]

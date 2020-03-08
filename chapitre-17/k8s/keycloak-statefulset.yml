@@ -1,0 +1,28 @@
+kind: StatefulSet
+apiVersion: apps/v1
+metadata:
+  name: 'keycloak'
+  namespace: 'default'
+spec:
+  serviceName: "keycloak"
+  replicas: 1
+  selector:
+    matchLabels:
+      app: 'keycloak'
+  template:
+    metadata:
+      labels:
+        app: 'keycloak'
+    spec:
+      containers:
+      - name: keycloak
+        image: "jboss/keycloak:9.0.0"
+        ports:
+          - name: "http"
+            containerPort: 8080
+            protocol: TCP
+        env:
+          - name: KEYCLOAK_USER
+            value: "admin"
+          - name: KEYCLOAK_PASSWORD
+            value: "admin"
