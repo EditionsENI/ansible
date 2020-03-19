@@ -1,0 +1,21 @@
+---
+
+- name: "Keycloak operator deployment"
+  hosts: localhost
+  gather_facts: no
+  vars:
+    REPLACE_IMAGE: "quay.io/yannig/keycloak-operator:v0.0.1"
+    k8s_namespace: "default"
+    yml_path: "keycloak-operator/deploy"
+  tasks:
+    - name: "Deploy CRD"
+      k8s:
+        namespace: "{{ k8s_namespace }}"
+        definition: "{{ lookup('template', item) }}"
+      loop: "{{ query('fileglob', yml_path + '/crds/*crd.yaml') }}"
+
+    - name: "Operator deployment"
+      k8s:
+        namespace: "{{ k8s_namespace }}"
+        definition: "{{ lookup('template', item) }}"
+      loop: "{{ query('fileglob', yml_path + '/*.yaml') }}"
