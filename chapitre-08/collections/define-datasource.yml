@@ -1,0 +1,16 @@
+---
+
+- name: "Define Prometheus datasource"
+  hosts: localhost
+  gather_facts: no
+  collections:
+    - community.grafana
+  tasks:
+    - name: "Define Prometheus datasource"
+      grafana_datasource:
+        name: "test"
+        grafana_url: "http://localhost:3000"
+        grafana_user: "admin"
+        grafana_password: "admin"
+        ds_type: "prometheus"
+        ds_url: "http://localhost:9090"
