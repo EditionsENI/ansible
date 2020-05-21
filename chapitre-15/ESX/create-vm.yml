@@ -37,7 +37,7 @@
         args: "set-hostname {{vm_to_create}} --static"
       - cmd: "/usr/bin/nmcli"
         args: "connection modify ens32 ipv4.addresses 192.168.0.1/24"
-      until: retry.failed is not defined
+      until: retry is not failed
       delay: 2
       retries: 30
       register: retry
