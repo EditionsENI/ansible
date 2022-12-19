@@ -19,7 +19,7 @@
         hostname:     "{{inventory_hostname}}"
         networks:
           - name:     "{{network_name}}"
-        image:        "centos-httpd"
+        image:        "{{docker_image|d('redhat/ubi8')}}"
         state:        started
       delegate_to: localhost
 

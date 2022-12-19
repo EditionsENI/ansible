@@ -1,7 +1,7 @@
 apache:
   hosts:
     "apache[1:4]":
-      docker_image: centos-httpd
+      docker_image: redhat/ubi8
       start_cmd: "{{ omit }}"
 
 mysql:
