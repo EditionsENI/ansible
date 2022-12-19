@@ -1,0 +1,2 @@
+hashicorp_credentials: "auth_method=userpass username=yannig password=mypassword url=http://hashicorp:8200"
+my_secret: "{{ lookup('hashi_vault', hashicorp_credentials + 'secret=secret/DBPassword') }}"
