@@ -7,7 +7,7 @@
   tasks:
     - name: "Create podman network"
       containers.podman.podman_network:
-        name: "{{network_name}}"
+        name: "{{ network_name }}"
         state: present
 
 - name: "Create docker plateform"
@@ -17,10 +17,10 @@
   tasks:
     - name: "Create containers"
       containers.podman.podman_container:
-        name:         "{{inventory_hostname}}"
-        hostname:     "{{inventory_hostname}}"
+        name:         "{{ inventory_hostname }}"
+        hostname:     "{{ inventory_hostname }}"
         command:      "/sbin/init"
-        network:      "{{network_name}}"
-        image:        "docker.io/{{docker_image|d('redhat/ubi8')}}"
+        network:      "{{ network_name}}"
+        image:        "{{ container_image|d('redhat/ubi8') }}"
         state:        started
       delegate_to: localhost
