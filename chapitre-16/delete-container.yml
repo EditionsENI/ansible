@@ -1,12 +1,11 @@
 ---
 
-- name: "Delete docker plateform"
+- name: "Delete containers"
   hosts: [ "all" ]
   gather_facts: no
   tasks:
     - name: "Delete containers"
-      docker_container:
-        name:       "{{inventory_hostname}}"
-        force_kill: yes
+      containers.podman.podman_container:
+        name:       "{{ inventory_hostname }}"
         state:      absent
       delegate_to: localhost

@@ -1,37 +1,45 @@
 ---
 
-- name: "Create docker network"
+- name: "Create podman network"
   hosts: localhost
   gather_facts: no
+  collections: &collections
+    - "containers.podman"
   tasks:
-    - name: "Create docker network"
-      containers.podman.podman_network:
+    - name: "Create podman network"
+      podman_network:
         name: "{{ network_name }}"
         state: present
 
 - name: "Create Apache"
   hosts: [ "apache" ]
   gather_facts: no
+  collections: &collections
   tasks:
     - name: "Create Apache containers"
-      containers.podman.podman_container: &container
+      podman_container: &container
         name:         "{{ inventory_hostname }}"
         hostname:     "{{ inventory_hostname }}"
         network:      "{{ network_name }}"
-        image:        "{{ container_image|d('redhat/ubi8') }}"
+        image:        "{{ container_image|d('quay.io/centos/centos:stream8') }}"
         state:        started
       delegate_to: localhost
 
-- name: "Create docker plateform"
+- name: "Create podman plateform"
   hosts: [ "all", "!apache" ]
   gather_facts: no
   tasks:
     - name: "Create containers"
-      docker_container:
+      podman_container:
         <<: *container
         command:      "/sbin/init"
-        image:        "{{ container_image|d('redhat/ubi8') }}"
-        tmpfs:        ["/run", "/tmp"]
-        volumes:      ["/sys/fs/cgroup:/sys/fs/cgroup:ro"]
-        privileged:   "{{ privileged|d(False) }}"
       delegate_to: localhost
+
+- name: "Install prereq"
+  hosts: [ "all", "!apache", "haproxy" ]
+  gather_facts: no
+  tasks:
+    - name: "Install prereq"
+      dnf:
+        name: "sudo,firewalld"
+        state: present

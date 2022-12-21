@@ -2,25 +2,35 @@
 
 - name: "Create podman network"
   hosts: localhost
-  become: yes
   gather_facts: no
+  collections: &collections
+    - "containers.podman"
   tasks:
     - name: "Create podman network"
-      containers.podman.podman_network:
+      podman_network:
         name: "{{ network_name }}"
         state: present
 
-- name: "Create docker plateform"
+- name: "Create podman plateform"
   hosts: [ "all" ]
   gather_facts: no
-  become: yes
+  collections: *collections
   tasks:
     - name: "Create containers"
-      containers.podman.podman_container:
-        name:         "{{ inventory_hostname }}"
-        hostname:     "{{ inventory_hostname }}"
-        command:      "/sbin/init"
-        network:      "{{ network_name}}"
-        image:        "{{ container_image|d('redhat/ubi8') }}"
-        state:        started
+      podman_container:
+        name:      "{{ inventory_hostname }}"
+        hostname:  "{{ inventory_hostname }}"
+        command:   "/sbin/init"
+        network:   "{{ network_name}}"
+        image:     "{{ container_image|d('quay.io/centos/centos:stream8') }}"
+        state:     started
       delegate_to: localhost
+
+- name: "Install prereq"
+  hosts: [ "apache", "mysql" ]
+  gather_facts: no
+  tasks:
+    - name: "Install prereq"
+      dnf:
+        name: "sudo,firewalld"
+        state: present

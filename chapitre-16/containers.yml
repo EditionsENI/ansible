@@ -1,8 +1,9 @@
 apache:
   hosts:
     "apache[1:4]":
-      container_image: "docker.io/redhat/ubi8"
+      container_image: "quay.io/centos/centos:stream8"
       start_cmd: "{{ omit }}"
+      php_install: yes
 
 mysql:
   hosts:
@@ -18,4 +19,4 @@ haproxy:
 all:
   vars:
     network_name: test.eni
-    ansible_connection: docker
+    ansible_connection: containers.podman.podman
