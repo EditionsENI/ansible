@@ -2,7 +2,7 @@
 
 - name: "mariadb-server installation"
   yum:
-    name:  "mariadb-server,MySQL-python"
+    name:  "mariadb-server,python3-PyMySQL"
     state: "installed"
 
 - name: "start mariadb service"

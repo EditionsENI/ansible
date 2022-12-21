@@ -2,7 +2,7 @@
 
 - name: "mariadb-server installation"
   yum:
-    name:  "mariadb-server,MySQL-python"
+    name:  "mariadb-server,python3-PyMySQL"
     state: "installed"
 
 - name: "start mariadb service"
@@ -10,3 +10,9 @@
     name:  "mariadb"
     state: "started"
     enabled: yes
+
+- name: "Allow mariadb connections"
+  firewalld:
+    service: "mysql"
+    permanent: yes
+    state: enabled

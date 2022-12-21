@@ -10,16 +10,16 @@
         key: "{{ansible_distribution}}-{{ansible_distribution_major_version}}"
     - debug: var=ansible_distribution,ansible_distribution_major_version
 
-- name: "Update SSL on CentOS 7 machines"
-  hosts: "CentOS-7"
+- name: "Update SSL on CentOS 8 machines"
+  hosts: "CentOS-8"
   gather_facts: no
   tasks:
-    - yum:
+    - dnf: # We can use yum on older machine
         name: "openssl"
         state: "latest"
 
-- name: "Update SSL on debian 8 machines"
-  hosts: "debian-8"
+- name: "Update SSL on debian 11 machines"
+  hosts: "debian-11"
   gather_facts: no
   tasks:
     - apt:
