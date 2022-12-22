@@ -27,7 +27,7 @@
     creates: "{{mediawiki_directory}}/LocalSettings.php"
     chdir: "{{mediawiki_maintenance_directory}}"
   command:
-    php install.php --scriptpath /{{mediawiki_name}}
+    php82 install.php --scriptpath /{{mediawiki_name}}
        --dbname mediawiki --lang fr
        --dbuser {{mediawiki_db_user}}
        --dbpass {{mediawiki_db_password}}

@@ -2,7 +2,7 @@
 
 # default mediawiki administrator
 mediawiki_admin_user:     "admin"
-mediawiki_admin_password: "@adm1n"
+mediawiki_admin_password: "@adm1nM3diaW1k1"
 
 mediawiki_name: "mediawiki"
 mediawiki_title: "ENI"

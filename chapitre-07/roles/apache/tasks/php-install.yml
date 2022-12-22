@@ -20,7 +20,7 @@
 - name: "install php82 packages"
   dnf:
     name: "php82-php,php82-php-mysqlnd,php82-php-xml,php82-php-mbstring,php82-php-gd,php82-php-intl"
-    state: latest
+    state: present
     enablerepo: "remi-8.2"
   changed_when: yes
   # We need to restart apache

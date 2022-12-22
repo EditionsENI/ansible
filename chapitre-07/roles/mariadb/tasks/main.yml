@@ -1,7 +1,7 @@
 ---
 
 - name: "mariadb-server installation"
-  yum:
+  dnf:
     name:  "mariadb-server,python3-PyMySQL"
     state: "installed"
 
@@ -16,3 +16,11 @@
     service: "mysql"
     permanent: yes
     state: enabled
+
+- name: "Listen on all interfaces"
+  lineinfile:
+    path: "/etc/my.cnf.d/mariadb-server.cnf"
+    line: "bind-address=0.0.0.0"
+    insertafter: "[galera]"
+    regexp: "bind-address"
+  notify: ["mariadb restart"]
