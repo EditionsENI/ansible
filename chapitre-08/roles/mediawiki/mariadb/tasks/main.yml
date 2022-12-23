@@ -4,12 +4,12 @@
   mysql_db:
     name: "{{ mediawiki_db_name }}"
     state: present
+  run_once: yes
 
 - name: "mediawiki user+privileges"
   mysql_user:
     name:     "{{ mediawiki_db_user }}"
     password: "{{ mediawiki_db_password }}"
     priv:     "{{ mediawiki_db_name }}.*:ALL"
-    host:     "{{ item }}"
+    host:     "{{ ansible_default_ipv4.address }}"
     state:    present
-  loop: "{{ groups.apache }}"
