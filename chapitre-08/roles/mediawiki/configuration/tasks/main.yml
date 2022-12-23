@@ -14,8 +14,8 @@
     owner: "apache"
     group: "apache"
     remote_src: yes
-    # setype: httpd_sys_content_t
-    # remove mediawiki-1.29.0/ from path
+    setype: httpd_sys_content_t
+    # remove mediawiki-xx.x/ from path
     extra_opts: --transform=s/^mediawiki-[0-9\.]*\///
   # vars to known if current machine have mediawiki files
   # check presence in next task
@@ -25,7 +25,7 @@
   become: yes
   become_user: "apache"
   command:
-    php install.php --scriptpath /{{ mediawiki_name }}
+    php82 install.php --scriptpath /{{ mediawiki_name }}
        --dbname mediawiki --lang fr
        --dbuser {{ mediawiki_db_user }}
        --dbpass {{ mediawiki_db_password }}
@@ -51,13 +51,13 @@
   lineinfile:
     path: "{{ mediawiki_directory }}/LocalSettings.php"
     regex: '\$wgServer.*'
-    line: '$wgServer = $_SERVER["HOST"];'
+    line: '$wgServer = WebRequest::detectServer();'
 
 - name: "mediawiki db update"
   become: yes
   become_user: "apache"
   command:
-    php update.php --quick
+    php82 update.php --quick
   args:
     chdir: "{{ mediawiki_maintenance_directory }}"
   # Update need to be launched only once

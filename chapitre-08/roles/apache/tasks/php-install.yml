@@ -1,18 +1,27 @@
 ---
 
 - name: "epel activation"
-  yum:
-    name: "epel-release"
-    state: present
+  dnf:
+    name: "epel-release,epel-next-release"
+    enablerepo: powertools
+
 - name: "remi repo activation"
-  yum:
-    name: "https://rpms.remirepo.net/enterprise/remi-release-7.rpm"
+  dnf:
+    name: "https://rpms.remirepo.net/enterprise/remi-release-8.rpm"
     state: present
-- name: "install php73 packages"
-  yum:
-    name: "php,php-mysql,php-xml,php-mbstring,php-mcrypt,php-gd,php-intl"
-    state: latest # noqa 403
-    enablerepo: "remi-php73"
+    disable_gpg_check: true
+
+- name: "Import GPG Key"
+  rpm_key:
+    state: present
+    key: "/etc/pki/rpm-gpg/{{ item }}"
+  loop: ["RPM-GPG-KEY-remi", "RPM-GPG-KEY-remi2020", "RPM-GPG-KEY-remi2021", "RPM-GPG-KEY-remi2022"]
+
+- name: "install php82 packages"
+  dnf:
+    name: "php82-php,php82-php-mysqlnd,php82-php-xml,php82-php-mbstring,php82-php-gd,php82-php-intl"
+    state: present
+    enablerepo: "remi-8.2"
   changed_when: yes
   # We need to restart apache
   notify: [ "apache restart" ]
