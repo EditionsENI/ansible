@@ -5,7 +5,7 @@
   yum:
     name: "httpd"
     state: "present"
-- include: "php-install.yml"
+- include_tasks: "php-install.yml"
   # force boolean evaluation
   when: php_install|bool
 - name: "apache service activation"
