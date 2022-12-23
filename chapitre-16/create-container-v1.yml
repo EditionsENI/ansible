@@ -32,5 +32,5 @@
   tasks:
     - name: "Install prereq"
       dnf:
-        name: "sudo,firewalld"
+        name: "sudo,firewalld,iproute"
         state: present
