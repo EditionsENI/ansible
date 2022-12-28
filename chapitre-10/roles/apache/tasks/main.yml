@@ -1,15 +1,18 @@
 ---
-# tasks file for apache
 
 - name: "apache installation"
-  yum:
+  dnf:
     name: "httpd"
-    state: "present"
-- include_tasks: "php-install.yml"
-  # force boolean evaluation
-  when: php_install|bool
+    state: "latest" # noqa package-latest
+
 - name: "apache service activation"
   service:
     name: "httpd"
     state: "started"
     enabled: yes
+
+- name: "Allow http connections"
+  firewalld:
+    service: "http"
+    permanent: yes
+    state: enabled

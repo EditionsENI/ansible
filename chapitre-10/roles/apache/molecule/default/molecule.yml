@@ -2,23 +2,13 @@
 dependency:
   name: galaxy
 driver:
-  name: docker
-lint:
-  name: yamllint
+  name: podman
 platforms:
   - name: instance
-    image: centos:7
+    image: quay.io/centos/centos:stream8
     command: /sbin/init
-    tmpfs:
-      - /run
-      - /tmp
-    volumes:
-      - /sys/fs/cgroup:/sys/fs/cgroup:ro
+    pre_build_image: false
 provisioner:
   name: ansible
-  lint:
-    name: ansible-lint
 verifier:
-  name: testinfra
-  lint:
-    name: flake8
+  name: ansible

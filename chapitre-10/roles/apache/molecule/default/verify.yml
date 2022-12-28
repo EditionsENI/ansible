@@ -1,0 +1,14 @@
+---
+# This is an example playbook to execute Ansible tests.
+
+- name: Verify
+  hosts: all
+  gather_facts: false
+  tasks:
+  - name: "Retrieve services state"
+    ansible.builtin.service_facts: {}
+  - name: "Check assertion on service status"
+    ansible.builtin.assert:
+      that:
+        - services["httpd.service"].state  == "running"
+        - services["httpd.service"].status == "enabled"

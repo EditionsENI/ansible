@@ -1,5 +1,2 @@
 ---
-# Apache: default root configuration
-apache_root_conf: "/etc/httpd"
-# Where to store Apache configuration files
-apache_conf_d: "{{apache_root_conf}}/conf.d"
+# vars file for apache
