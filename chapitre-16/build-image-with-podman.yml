@@ -1,0 +1,13 @@
+---
+
+- name: "Build image with Podman"
+  hosts: localhost
+  gather_facts: no
+  collections:
+    - containers.podman
+  tasks:
+    - name: "Build centos-httpd image"
+      podman_image:
+        name: "centos-httpd"
+        path: "centos-httpd"
+        force: yes

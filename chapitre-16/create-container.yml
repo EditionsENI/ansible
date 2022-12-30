@@ -14,7 +14,7 @@
 - name: "Create Apache"
   hosts: [ "apache" ]
   gather_facts: no
-  collections: &collections
+  collections: *collections
   tasks:
     - name: "Create Apache containers"
       podman_container: &container
@@ -27,6 +27,7 @@
 
 - name: "Create podman plateform"
   hosts: [ "all", "!apache" ]
+  collections: *collections
   gather_facts: no
   tasks:
     - name: "Create containers"
@@ -36,10 +37,10 @@
       delegate_to: localhost
 
 - name: "Install prereq"
-  hosts: [ "all", "!apache", "haproxy" ]
+  hosts: [ "all", "!apache", "!haproxy" ]
   gather_facts: no
   tasks:
     - name: "Install prereq"
       dnf:
-        name: "sudo,firewalld"
+        name: "sudo,firewalld,iproute"
         state: present

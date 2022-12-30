@@ -1,5 +1,5 @@
-FROM centos
+FROM quay.io/centos/centos:stream8
 
-RUN yum -y install httpd
+RUN dnf -y install httpd
 COPY info.txt /var/www/httpd
 CMD ["/usr/sbin/httpd", "-DFOREGROUND"]
