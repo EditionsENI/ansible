@@ -4,11 +4,18 @@
 - name: Verify
   hosts: all
   gather_facts: false
+  collections:
+    - ansible.builtin
   tasks:
+  - name: "Retrieve package list"
+    package_facts: {}
   - name: "Retrieve services state"
-    ansible.builtin.service_facts: {}
+    service_facts: {}
+  - name: "Check Apache package"
+    assert:
+      that: packages.httpd
   - name: "Check assertion on service status"
-    ansible.builtin.assert:
+    assert:
       that:
         - services["httpd.service"].state  == "running"
         - services["httpd.service"].status == "enabled"

@@ -3,7 +3,7 @@
 - name: "apache installation"
   dnf:
     name: "httpd"
-    state: "latest" # noqa package-latest
+    state: "present"
 
 - name: "apache service activation"
   service:
