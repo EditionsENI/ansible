@@ -11,7 +11,7 @@
         name: "{{ network_name }}"
         state: present
 
-- name: "Create podman plateform"
+- name: "Create podman platform"
   hosts: [ "all" ]
   gather_facts: no
   collections: *collections

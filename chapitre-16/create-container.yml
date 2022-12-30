@@ -25,7 +25,7 @@
         state:        started
       delegate_to: localhost
 
-- name: "Create podman plateform"
+- name: "Create podman platform"
   hosts: [ "all", "!apache" ]
   collections: *collections
   gather_facts: no
