@@ -1,0 +1,18 @@
+monkeyble_scenarios:
+  create_vm_instance:
+    name: "Create vm instance"
+    tasks_to_test:
+      - task: "Create VM"
+        mock: &mock
+          config:
+            monkeyble_module:
+              consider_changed: true
+              result_dict:
+                json: {}
+      - task: "Set hostname/IP"
+        mock: *mock
+  delete_vm_instance:
+    name: "Delete vm instance"
+    tasks_to_test:
+      - task: "Delete VM"
+        mock: *mock
