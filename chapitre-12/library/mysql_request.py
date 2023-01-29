@@ -29,7 +29,7 @@ results:
 '''
 
 from ansible.module_utils.basic import AnsibleModule
-import MySQLdb
+import pymysql
 
 def main():
     module = AnsibleModule(
@@ -44,7 +44,7 @@ def main():
     request  = module.params.get('request')
 
     # Connect to your database
-    db = MySQLdb.connect(db=db_name)
+    db = pymysql.connect(db=db_name)
     # Get a cursor, execute your request then close connection
     cur = db.cursor()
     cur.execute(request)
