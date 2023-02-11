@@ -1,5 +1,5 @@
 ---
 
-meta:
+ansible_operator_meta:
   name: "test"
   namespace: default

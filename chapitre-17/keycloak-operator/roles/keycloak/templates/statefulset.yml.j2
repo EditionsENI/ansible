@@ -1,22 +1,23 @@
 kind: StatefulSet
 apiVersion: apps/v1
 metadata:
-  name: '{{ meta.name }}-keycloak'
-  namespace: '{{ meta.namespace }}'
+  name: '{{ ansible_operator_meta.name }}'
+  namespace: '{{ ansible_operator_meta.namespace }}'
 spec:
-  serviceName: '{{ meta.name }}-keycloak'
+  serviceName: '{{ ansible_operator_meta.name }}'
   replicas: {{ size }}
   selector:
     matchLabels:
-      app: '{{ meta.name }}-keycloak'
+      app: '{{ ansible_operator_meta.name }}'
   template:
     metadata:
       labels:
-        app: '{{ meta.name }}-keycloak'
+        app: '{{ ansible_operator_meta.name }}'
     spec:
       containers:
       - name: keycloak
         image: "{{ docker_image }}"
+        args: ["start-dev"]
         ports:
           - name: "http"
             containerPort: 8080

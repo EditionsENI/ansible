@@ -1,0 +1,12 @@
+apiVersion: keycloak.eni-editions.com/v1
+kind: Keycloak
+metadata:
+  labels:
+    app.kubernetes.io/name: keycloak
+    app.kubernetes.io/instance: keycloak-sample
+    app.kubernetes.io/part-of: keycloak-operator
+    app.kubernetes.io/managed-by: kustomize
+    app.kubernetes.io/created-by: keycloak-operator
+  name: keycloak-sample
+spec:
+  # TODO(user): Add fields here

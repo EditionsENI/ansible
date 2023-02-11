@@ -1,6 +1,6 @@
 ---
-# tasks file for keycloak
+# tasks file for Keycloak
 - name: "create keycloak statefulset and service"
-  k8s:
+  kubernetes.core.k8s:
     definition: "{{ lookup('template', item + '.yml.j2') }}"
   loop: ["statefulset", "service"]

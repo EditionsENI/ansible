@@ -1,8 +1,8 @@
 ---
-# defaults file for keycloak
+# defaults file for Keycloak
 size: "1"
 
-docker_image: "docker.io/jboss/keycloak:9.0.0"
+docker_image: "quay.io/keycloak/keycloak:20.0.0"
 
 keycloak_user: "admin"
 keycloak_password: "admin"

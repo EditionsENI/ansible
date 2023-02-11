@@ -1,5 +1,7 @@
 ---
+# Use the 'create api' subcommand to add watches to this file.
 - version: v1
   group: keycloak.eni-editions.com
   kind: Keycloak
-  role: /opt/ansible/roles/keycloak
+  role: keycloak
+#+kubebuilder:scaffold:watch

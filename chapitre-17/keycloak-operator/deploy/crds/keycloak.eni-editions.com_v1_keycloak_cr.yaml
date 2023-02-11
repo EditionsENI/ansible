@@ -1,7 +1,0 @@
-apiVersion: keycloak.eni-editions.com/v1
-kind: Keycloak
-metadata:
-  name: example-keycloak
-spec:
-  # Add fields here
-  size: 1
